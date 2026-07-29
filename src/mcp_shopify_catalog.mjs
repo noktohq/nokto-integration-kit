@@ -1,9 +1,9 @@
-﻿// MCP proxy for the Shopify Catalog API.
-// Handles token refresh automatically â€” consumers just send JSON-RPC 2.0 over stdio.
+// MCP proxy for the Shopify Catalog API.
+// Handles token refresh automatically — consumers just send JSON-RPC 2.0 over stdio.
 //
 // Required env vars:
-//   SHOPIFY_CLIENT_ID     â€” OAuth client ID
-//   SHOPIFY_CLIENT_SECRET â€” OAuth client secret
+//   SHOPIFY_CLIENT_ID     — OAuth client ID
+//   SHOPIFY_CLIENT_SECRET — OAuth client secret
 //
 // Usage:
 //   node src/mcp_shopify_catalog.mjs

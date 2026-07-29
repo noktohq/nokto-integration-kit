@@ -1,4 +1,4 @@
-﻿# API Integration Principles
+# API Integration Principles
 
 Design guidelines for external API integrations at Nokto.
 
@@ -8,7 +8,7 @@ Design guidelines for external API integrations at Nokto.
 
 - Use REST for external services that do not offer GraphQL.
 - Use GraphQL with codegen and typed operations for Shopify and other GraphQL APIs.
-- Choose one style per integration â€” do not mix REST and GraphQL against the same service.
+- Choose one style per integration — do not mix REST and GraphQL against the same service.
 
 ---
 
@@ -42,7 +42,7 @@ Design guidelines for external API integrations at Nokto.
 - Always set an explicit timeout per call.
 - Default: 10 seconds for synchronous calls.
 - Default: 30 seconds for async or heavy operations.
-- Catch timeout errors explicitly â€” distinguish from network errors and API errors.
+- Catch timeout errors explicitly — distinguish from network errors and API errors.
 - Log timeouts with provider name and endpoint.
 
 ---
@@ -53,7 +53,7 @@ Design guidelines for external API integrations at Nokto.
 - Do not retry POST without an idempotency key.
 - Use exponential backoff: base 1 s, multiplier 2, max 3 attempts.
 - Add jitter to avoid thundering herd.
-- Do not retry 4xx errors â€” they are client errors, not transient.
+- Do not retry 4xx errors — they are client errors, not transient.
 - On 429: respect the `Retry-After` header.
 - On 503: retry with backoff.
 - Log every retry attempt with attempt number and reason.
@@ -66,7 +66,7 @@ Design guidelines for external API integrations at Nokto.
 - Respect `Retry-After` headers.
 - Implement client-side rate limiting for services with low limits.
 - Use a queue or throttle where burst calls are possible.
-- Log rate-limit hits â€” they indicate a design problem.
+- Log rate-limit hits — they indicate a design problem.
 
 ---
 
@@ -75,12 +75,12 @@ Design guidelines for external API integrations at Nokto.
 - Verify webhook signatures before processing.
 - Use HMAC-SHA256 where supported.
 - Reject webhooks without a valid signature with 401.
-- Make webhook handlers idempotent â€” handle the same event ID multiple times without side effects.
+- Make webhook handlers idempotent — handle the same event ID multiple times without side effects.
 - Block replay by checking event ID or timestamp; reject events older than 5 minutes.
 - Log event ID, request ID, provider, status, and latency for all webhooks.
 - Do not log payloads containing PII.
-- Return 200 quickly â€” process asynchronously where possible.
-- Do not return 500 for business logic errors â€” return 200 and log the failure.
+- Return 200 quickly — process asynchronously where possible.
+- Do not return 500 for business logic errors — return 200 and log the failure.
 
 ---
 
@@ -127,8 +127,8 @@ Design guidelines for external API integrations at Nokto.
 - Use codegen for typed operations.
 - Never send raw query strings without typing.
 - Use fragments for repeated fields.
-- Do not over-fetch â€” request only fields you use.
-- Use variables â€” not string interpolation in queries.
+- Do not over-fetch — request only fields you use.
+- Use variables — not string interpolation in queries.
 - Validate schema against server periodically.
 - Catch GraphQL errors in the `errors` field, not just `data`.
 - Log operation name and variables (without PII) on failure.
@@ -162,5 +162,5 @@ Design guidelines for external API integrations at Nokto.
 - Provide an OpenAPI spec when delivering a public REST API.
 - The spec is the machine-readable source of truth.
 - Validate API responses against the spec in tests.
-- Generate the spec from code where possible â€” do not maintain it by hand.
+- Generate the spec from code where possible — do not maintain it by hand.
 

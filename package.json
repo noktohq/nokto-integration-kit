@@ -1,0 +1,14 @@
+{
+  "name": "nokto-integration-kit",
+  "version": "1.0.0",
+  "description": "MCP stdio proxy for Shopify's global Catalog MCP endpoint, with OAuth client-credentials token handling",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/mcp_shopify_catalog.mjs",
+    "check": "node --check src/mcp_shopify_catalog.mjs"
+  }
+}
