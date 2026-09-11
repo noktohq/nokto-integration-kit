@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node src/mcp_shopify_catalog.mjs",
-    "check": "node --check src/mcp_shopify_catalog.mjs"
+    "check": "node --check src/mcp_shopify_catalog.mjs",
+    "test": "node --test tests/"
   }
 }
