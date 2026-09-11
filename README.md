@@ -1,4 +1,4 @@
-﻿# nokto-integration-kit
+# nokto-integration-kit
 
 Integration utilities and patterns used across Nokto's external API connections.
 
@@ -32,6 +32,14 @@ Add to your Claude Desktop `claude_desktop_config.json`:
   }
 }
 ```
+
+**Tests:**
+
+```bash
+npm test
+```
+
+Seven `node:test` cases cover token acquisition, caching and refresh, timeout signals, bearer forwarding, upstream error mapping and stdio parse errors. `fetch` is injected, so the suite runs offline with no credentials.
 
 ### `docs/api-integration-principles.md`
 
