@@ -1,0 +1,49 @@
+# STATE.yaml — levende status for dette repoet (NOKTO CONTROL TOWER).
+# Schema: nokto-ops/control/schema/state.schema.json. Oppdateres av `nokto stop` — ikke dupliser i README.
+schema_version: 1
+project: nokto-integration-kit — MCP stdio-proxy for Shopify Catalog API (MIT)
+repo: noktohq/nokto-integration-kit
+state: maintenance
+phase: publisert, vedlikehold
+now: null
+next: []
+waiting: []
+blockers: []
+decisions_needed: []
+done:
+- what: Offline node:test-suite for proxyen
+  at: '2026-09-11'
+  evidence: 'PR #2'
+milestones:
+- id: v1
+  title: Initial public implementation
+  status: done
+  date: '2026-06-08'
+  evidence: commit e1fc06c
+- id: ci-fiks
+  title: CI kjører Node, ikke Python
+  status: done
+  date: '2026-07-29'
+  evidence: commit b878467
+- id: tester
+  title: 7 node:test offline
+  status: done
+  date: '2026-09-11'
+  evidence: 'PR #2'
+environment:
+  runtime: Node 20/22; node --test
+  deploy: pip/npm — bibliotek, ingen deploy
+  url: https://github.com/noktohq/nokto-integration-kit
+  notes: null
+production_status: n/a
+production_note: Bibliotek. Publisert som kildekode på GitHub.
+branch: main
+last_verified_commit: 9b411c8
+last_checkpoint: null
+last_session: null
+security_findings: []
+updated_at: '2026-09-21T05:37:44Z'
+sources:
+- README.md
+- commits
+- GitHub-snapshot 2026-09-21
