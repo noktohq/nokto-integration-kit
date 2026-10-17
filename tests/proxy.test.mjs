@@ -21,7 +21,7 @@ function fakeFetch(handlers) {
   return { fetchImpl, calls };
 }
 
-const creds = { clientId: "id", clientSecret: "secret" };
+const creds = { clientId: "id", clientSecret: "secret", log: () => {} };
 
 test("refuses to start without credentials", () => {
   assert.throws(() => createProxy({}), /SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET must be set/);
@@ -64,7 +64,8 @@ test("token fetch failure throws and nothing is cached", async () => {
   ]);
   const proxy = createProxy({ ...creds, fetchImpl });
 
-  await assert.rejects(proxy.getToken(), /Token fetch failed: 401 bad client/);
+  // The upstream body is not echoed: errors carry only the status code.
+  await assert.rejects(proxy.getToken(), (err) => err.message === "Token fetch failed: 401");
   assert.equal(await proxy.getToken(), "tok-ok");
   assert.equal(calls.length, 2);
 });
@@ -97,7 +98,7 @@ test("upstream HTTP errors become JSON-RPC errors that keep the request id", asy
   assert.deepEqual(response, {
     jsonrpc: "2.0",
     id: "abc",
-    error: { code: -32603, message: "Shopify responded 503: upstream down" },
+    error: { code: -32603, message: "Shopify responded 503" },
   });
 });
 
@@ -117,7 +118,7 @@ test("handleLine: blank lines are ignored and malformed JSON is a parse error", 
 test("handleLine: transport failures never throw; they answer as JSON-RPC errors", async () => {
   const { fetchImpl } = fakeFetch([
     () => {
-      throw new Error("The operation was aborted due to timeout");
+      throw new DOMException("The operation was aborted due to timeout", "TimeoutError");
     },
   ]);
   const proxy = createProxy({ ...creds, fetchImpl });
@@ -125,5 +126,5 @@ test("handleLine: transport failures never throw; they answer as JSON-RPC errors
   const response = await proxy.handleLine(JSON.stringify({ jsonrpc: "2.0", id: 3, method: "x" }));
   assert.equal(response.id, 3);
   assert.equal(response.error.code, -32603);
-  assert.match(response.error.message, /aborted due to timeout/);
+  assert.equal(response.error.message, "Token fetch timed out");
 });
